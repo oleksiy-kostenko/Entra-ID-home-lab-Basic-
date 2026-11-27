@@ -41,8 +41,54 @@ For synced users, AD is the main copy. Details like name, job title, department 
 
 This part is what I've learned so far. Syncing my AD is a later step in this lab.
 
-
 After creating the groups and users, i wanted to practice bulk creating, and i'm using a csv file for that. For security reasons i won't show the original file, but i'll post an example of the original looks like.
 <img width="899" height="473" alt="{4F606B16-2583-418C-8616-9C780C2115B7}" src="https://github.com/user-attachments/assets/d5da9a73-61d1-4437-898b-19fbfa802640" />
+
+getting ready to import...
+
+<img width="317" height="406" alt="{90F7E99F-2A75-4140-ACCC-C30CD554DCF8}" src="https://github.com/user-attachments/assets/85b45ac0-c3a1-4d0f-889d-db1f6d53c915" />
+
+Result: all 20 new users appeared in Entra ID, bringing the list to 25 accounts, including my original admin account.
+<img width="1919" height="859" alt="{2FC1B3DC-9999-4F23-A4C3-7B56E873DE69}" src="https://github.com/user-attachments/assets/6c50123d-a8dd-4150-b0d0-c747b311ffba" />
+
+**Step 2: Creating an admin account**
+
+**What I did:**
+I created a separate cloud-only account called lab.admin and assigned it the Global Administrator role.
+
+**Why:**
+I didn't want to use my personal sign-up account for everyday admin work. A separate account keeps admin work apart from personal use. Microsoft also recommends cloud-only accounts for cloud admin roles, so a problem in a local AD doesn't reach them through sync.
+
+**What for:**
+To manage the lab, including users, groups, admin roles and security settings. My original account stays as a backup in case I can't get into lab.admin.
+
+**Security note:**
+Global Administrator has very broad control. In a real company, only a few people should have it, and other staff should get a role with only the access they need.
+
+I use a separate admin account to keep admin work apart from my personal account. Global Administrator is very powerful, so it should be limited and protected with MFA.
+<img width="986" height="857" alt="image" src="https://github.com/user-attachments/assets/8f0b3c54-a6e5-4dc0-b6a0-cd95c3f02ca3" />
+
+I checked that security defaults were enabled. They require users to register for multifactor authentication (MFA), which adds a second step to protect accounts.
+<img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/ec845d74-88ac-4671-9e59-6ba0e0236b7b" />
+
+
+Next up, setting up MFA for the admin global user.
+
+When signing in with lab.admin, I was asked to change the password before continuing.
+<img width="645" height="640" alt="image" src="https://github.com/user-attachments/assets/02b572b9-5b72-44fa-8cb3-de278cddcd98" />
+
+Because security defaults were enabled, lab.admin was required to set up multifactor authentication (MFA).
+<img width="1450" height="869" alt="{990E9FEF-2529-4515-8490-5BAC74654781}" src="https://github.com/user-attachments/assets/74fb6359-07ea-4d44-a44a-35f7096ca291" />
+
+I set up Microsoft Authenticator for lab.admin, and it became the default sign-in method. This completed the MFA registration required by security defaults.
+
+<img width="490" height="547" alt="image" src="https://github.com/user-attachments/assets/8dee98da-d77b-4c5d-a747-e17c6329baa4" />
+
+
+
+
+
+
+
 
 
