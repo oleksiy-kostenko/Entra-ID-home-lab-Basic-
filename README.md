@@ -103,3 +103,61 @@ This part is what I've learned so far. Syncing my AD is a later step in this lab
 - Practise Microsoft 365: licences, mailboxes and Teams
 
 
+I added the Hybrid Identity Administrator role to lab.admin to prepare for connecting my AD with Cloud Sync.
+<img width="1910" height="779" alt="{285D83EB-931E-497A-AC9F-2462368EDDFB}" src="https://github.com/user-attachments/assets/85f2ea45-8e2d-42b7-8236-33a4a8dad9f2" />
+
+<img width="1910" height="779" alt="{285D83EB-931E-497A-AC9F-2462368EDDFB}" src="https://github.com/user-attachments/assets/b362a317-6148-4e09-97d3-847598c69388" />
+
+Before syncing: I signed in to Entra ID from my domain controller as lab.admin. This also confirms that the admin account I set up works, and that it has the Global Administrator role. At this point, the directory had 26 users and 7 groups.
+
+<img width="1025" height="769" alt="image" src="https://github.com/user-attachments/assets/429af51a-0f73-430a-a2d4-7f4ecd646d54" />
+
+Step: Downloading the Cloud Sync agent
+
+What I did: On my domain controller, I went to Cloud Sync in Entra ID to download the provisioning agent.
+
+Why: The agent is the link between my local Active Directory and Entra ID. It's needed before I can sync my users to the cloud. At this point, no agents were registered yet.
+
+<img width="1025" height="769" alt="image" src="https://github.com/user-attachments/assets/14764cef-be60-4a03-82ca-3864cc6b60c3" />
+
+
+## Setting up the Cloud Sync agent
+
+The agent is the link between my local Active Directory and Entra ID. I installed it on my domain controller (DC01), and during setup it asked for a service account.
+
+**What's a service account?**
+It's an account used by a program, not a person.
+
+**What's a gMSA?**
+A group Managed Service Account (gMSA) is a special type of service account. Windows creates and changes its password automatically, so I don't have to manage it myself.
+
+**What I did:** I chose "Create gMSA" in the setup wizard. Creating it needs domain admin permission.
+
+**The accounts involved:**
+
+| Account | What it's for |
+|---|---|
+| lab.admin | Signing in to Entra ID during setup |
+| Domain Administrator | Giving permission to create the gMSA in AD |
+| gMSA | The account the agent runs under |
+
+This was part of setting up the agent. It doesn't start syncing users yet.
+<img width="1642" height="959" alt="{EF497782-AA09-40D6-BDCD-7843E492EE22}" src="https://github.com/user-attachments/assets/32fff42c-53ec-42a3-b959-6b0d8937ee2a" />
+
+<img width="1133" height="814" alt="{750C919C-1009-40E6-89EB-1F493714B40E}" src="https://github.com/user-attachments/assets/d9f0dd3e-10d9-4281-b1f2-20def780e637" />
+
+<img width="815" height="290" alt="{512CFF4F-31C5-4E91-B9DA-1DE176BE6DA4}" src="https://github.com/user-attachments/assets/f9663795-983d-4e08-97a0-3da5c029ead0" />
+## Troubleshooting: Cloud Sync agent registration (not resolved yet)
+
+**Problem:** The agent setup created the gMSA, but failed when registering with Microsoft: "Connector registration failed".
+
+**What was checked (with AI help):**
+- The registration address resolved in DNS.
+- DC01 could connect to it on port 443.
+- Event Viewer showed a more detailed error: "There was no endpoint listening" at the registration address.
+- The same error was publicly reported on 21 November 2026. There was no confirmed fix when it was checked on 28 November 2026.
+
+**Status:** The cause is still unknown and sync is not set up yet.
+
+I used AI to help troubleshoot. It guided the checks, ran the final connection tests and log searches on DC01, and helped explain the results.
+
